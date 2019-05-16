@@ -1,6 +1,6 @@
 FROM archlinux/base
 
-RUN pacman -Syuq --noconfirm git base-devel sudo namcap
+RUN pacman -Syuq --noconfirm git base-devel sudo go
 
 RUN    echo "Defaults        lecture = never" > /etc/sudoers.d/privacy \
     && echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel \
@@ -9,14 +9,8 @@ RUN    echo "Defaults        lecture = never" > /etc/sudoers.d/privacy \
 USER builder
 WORKDIR /home/builder
 
-RUN    git clone https://aur.archlinux.org/package-query.git \
-    && cd package-query \
+RUN    git clone https://aur.archlinux.org/yay.git \
+    && cd yay \
     && makepkg -si --noconfirm \
     && cd .. \
-    && rm -rf package-query
-
-RUN    git clone https://aur.archlinux.org/yaourt.git \
-    && cd yaourt \
-    && makepkg -si --noconfirm \
-    && cd .. \
-    && rm -rf yaourt
+    && rm -rf yay
